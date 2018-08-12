@@ -8,7 +8,7 @@ module.exports = function(app, passport) {
 
 	// PROFILE SECTION =========================
 	app.get('/chatroom', isLoggedIn, function(req, res) {
-		console.log('req.user->'+ JSON.stringify(req.user))
+		console.log('User reached /chatroom');
 		res.render('chatroom.ejs', {
 			user : req.user
 		});

@@ -1,7 +1,7 @@
 
 $(function(){
 	//make connection
-	const socket = io.connect('https://4dd5514b.ngrok.io');
+	const socket = io.connect('https://491ab02a.ngrok.io');
 
 	const message = $("#message");
 	const name = $("#name").val();
@@ -9,19 +9,32 @@ $(function(){
 	const chatTextArea = $("#chatTextArea");
 	const feedback = $("#feedback");
 
-	//Emit message
+	$("#message").keyup(function(event) {
+	    if (event.keyCode === 13) {
+	        $("#send_message").click();
+	    }
+	});
+	//Emit message send event
 	send_message.click(function(){
-		socket.emit('new_message', {message : message.val()});
+		if(message.val() && message.val().length>0){
+			socket.emit('new_message', {message : message.val()});
+			message.val('');
+		}
 	});
 
 	//Listen on new_message
 	socket.on("new_message", (data) => {
 		feedback.html('');
 		message.val('');
-		chatTextArea.append("<p class='message'>" + data.name + ": " + data.message + "</p>");
+		let elementString = 
+			"<p class='message'>"	+
+			"<img src='"+ data.photo +"' alt='Thumbnail'>"	+
+			"<i>" + data.message + "</i>"	+
+			"</p>";
+		chatTextArea.append(elementString);
 	});
 
-	//Emit typing
+	//Emit typing event
 	message.bind("keypress", () => {
 		socket.emit('typing');
 	});
@@ -32,13 +45,6 @@ $(function(){
 		feedback.append("<p><i>" + data.name + " is typing a message..." + "</i></p>");
 	});
 
-
-
-	
-	//Emit a name
-	// send_username.click(function(){
-	// 	socket.emit('change_username', {username : username.val()});
-	// });
 
 });
 

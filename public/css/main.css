@@ -1,0 +1,31 @@
+body { 
+	padding-top:20px; 
+	word-wrap:break-word; 
+}
+
+#chatroom {
+	border:1px solid grey;
+	margin-top:5px; 
+	padding:3px;
+	height:300px;
+	max-height: 300px;
+	overflow: auto; 
+}
+
+#message {
+	border:1px solid grey;
+	padding:2px;
+}
+
+.message {
+	margin-top:5px;
+	margin-bottom:0px;
+	margin-left:5px;
+}
+
+img {
+	width:38px;
+	height:38px;
+	border-radius: 50%;
+	margin-right:6px;
+}

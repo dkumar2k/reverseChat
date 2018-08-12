@@ -43,8 +43,9 @@ mongoose.connection.on('open', function() {
   // here you set that you're using `ejs` template engine, and the
   // default extension is `ejs`
   app.set('view engine', 'ejs');
+
   // required for passport
-  app.use(session({
+  const sessionMiddleware = session({
       name: "myCookie",
       secret: 'arbitsessionsecret', // session secret
       resave: true,
@@ -52,27 +53,30 @@ mongoose.connection.on('open', function() {
       store: new (require("connect-mongo")(session))({
         url: dbUrl
       })
-  }));
+  });
 
-  app.use(passport.initialize());
-  app.use(passport.session()); // persistent login sessions
-  app.use(flash()); // use connect-flash for flash messages stored in session
+  app
+    .use(sessionMiddleware)
+    .use(passport.initialize())
+    .use(passport.session()) // persistent login sessions
+    // .use(flash()) // use connect-flash for flash messages stored in session
+    ;
 
   require('./app/routes/user.js')(app, passport); // load our user routes and pass in our app and fully configured passport
 
-  app.use(function(req, res) {
-    res.status(404).send({
-      url: req.originalUrl,
-      error: 'Not Found'
-    });
-  });
 
   const server = app.listen(3000, ()=>{
     console.log('Node server Listening on port:' + server.address().port);
   });
 
-  require('./app/controllers/chat')(server); // load our user routes and pass in our app and fully configured passport
+  require('./app/controllers/chat')(server, sessionMiddleware); // load our user routes and pass in our app and fully configured passport
 
+  app.use((req, res) => {
+    res.status(404).send({
+      url: req.originalUrl,
+      error: 'Not Found'
+    });
+  });
 
 });
 

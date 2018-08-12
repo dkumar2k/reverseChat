@@ -12,7 +12,8 @@ const UserSchema = new Schema({
 		id: String,
 		token: String, 		// we will save the token that facebook provides to the user					
 		name: String,		// look at the passport user profile to see how names are returned
-		email: String
+		email: String,
+		photo: String
 	},
 	isActive:{
 		type:Boolean,
