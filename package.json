@@ -7,6 +7,7 @@
     "start": "node server"
   },
   "dependencies": {
+    "socket.io": "*",
     "body-parser": "*",
     "compression": "*",
     "connect-mongo": "*",
@@ -19,7 +20,8 @@
     "passport-local": "*",
     "ejs": "*",
     "nconf": "*",
-    "dateformat": "*"
+    "dateformat": "*",
+    "connect-flash": "*"
   },
   "devDependencies": {}
 }
