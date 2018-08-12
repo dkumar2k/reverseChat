@@ -1,0 +1,25 @@
+{
+  "name": "ReverseChat",
+  "description": "ReverseChat is a Full-Stack app with MongoDB, Express and Node.js and Facebook Login integration using Passportjs",
+  "version": "0.0.1",
+  "author": "Sunny",
+  "scripts": {
+    "start": "node server"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "compression": "*",
+    "connect-mongo": "*",
+    "cookie-parser": "*",
+    "express": "*",
+    "express-session": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-facebook": "*",
+    "passport-local": "*",
+    "ejs": "*",
+    "nconf": "*",
+    "dateformat": "*"
+  },
+  "devDependencies": {}
+}
