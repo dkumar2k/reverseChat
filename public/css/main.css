@@ -2,8 +2,11 @@ body {
 	padding-top:20px; 
 	word-wrap:break-word; 
 }
-
-#chatroom {
+a:focus{
+	border: none  !important;
+	box-shadow: none !important;
+}
+.chatroom {
 	border:1px solid grey;
 	margin-top:5px; 
 	padding:3px;
@@ -12,9 +15,11 @@ body {
 	overflow: auto; 
 }
 
-#message {
+input#message {
 	border:1px solid grey;
-	padding:2px;
+	padding:5px;
+	margin-right:3px;
+
 }
 
 .message {

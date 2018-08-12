@@ -2,7 +2,7 @@ module.exports = function(app, passport) {
 
 	// show the home page (will also have our login links)
 	app.get('/', function(req, res) {
-		console.log('reached get / route')
+		console.log('reached get / route');
 		res.render('index.ejs');
 	});
 
@@ -13,7 +13,19 @@ module.exports = function(app, passport) {
 			user : req.user
 		});
 	});
-
+	
+	app.get('/dashboard', isLoggedIn, function(req, res) {
+		console.log('User reached /dashboard');
+		res.render('dashboard.ejs', {
+			'dashboardRecords' : [
+				{name:'Sunny Mishra', photo:'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=298312590921688&height=50&width=50&ext=1536679271&hash=AeQGKpIVwi2iuN4I' ,
+				messageCount:21},
+				{name:'Robot', photo:'../image/robot.png',messageCount:19},
+				{name:'Funny Mishra', photo:'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=298312590921688&height=50&width=50&ext=1536679271&hash=AeQGKpIVwi2iuN4I',
+				messageCount:10}
+			]
+		});
+	});
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
 		req.logout();

@@ -25,10 +25,10 @@ module.exports = function(server, sessionMiddleware) {
 				name = user.facebook.name;
 				//listen on new_message
 				socket.on('new_message', (data) => {
+					let message=data.message;
 					//broadcast the new message
-					io.emit('new_message', { message : data.message, name : name, photo:user.facebook.photo });
-					// io.sockets.emit('new_message', {message : data.message, name : socket.name});
-					// socket.broadcast.emit('new_message', {message : data.message, name : socket.name});
+					io.emit('new_message', { message : message, photo:user.facebook.photo });
+					io.emit('new_message', { message : reverseMessage(message), photo:'../image/robot.png' });
 				});
 
 				//listen on typing
@@ -42,9 +42,13 @@ module.exports = function(server, sessionMiddleware) {
 };
 
 // route middleware to ensure user is logged in
-function isLoggedIn(req, res, next) {
-	if (req.isAuthenticated())
-		return next();
-
-	res.redirect('/');
-}
+const reverseMessage = (message) => {
+	let reverseMessage = "";
+	if(message && message.length>0){
+		let messageArray = message.split(" ");
+		for(let i=messageArray.length-1; i>=0; i--){
+			reverseMessage+=messageArray[i]+" ";
+		}
+	}
+	return reverseMessage;
+};

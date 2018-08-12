@@ -1,23 +1,27 @@
 <!doctype html>
 <html>
 <head>
-    <title>ReverseChat</title>
+    <title>ReverseChat Chatroom</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
     
 </head>
 <body>
-<section class="container" style="width:1000px;">
+<section class="container" style="width:800px;">
     <div class="row">
         <div class="col-sm-12">
-            <a href="/logout" class="btn btn-primary btn-sm" style="float:right;">Logout</a>
+            <div style="display:flex;justify-content:space-between;">
+                <a href="/dashboard" class="btn btn-default btn-sm" >Go to Dashboard &gt;</a>
+                <strong>Chatroom</strong>
+                <a href="/logout" class="btn btn-primary btn-sm" >Logout</a>
+            </div>
         </div>
     </div>
 
     <div class="row" >
         <div class="col-sm-12">
-            <div id="chatroom" class="well">
+            <div id="chatroom" class="well chatroom">
                 <div id="chatTextArea">
                 </div>
                 <div id="feedback">

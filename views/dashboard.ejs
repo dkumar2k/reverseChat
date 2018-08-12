@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <title>ReverseChat Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    
+</head>
+<body>
+<section class="container" style="width:800px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div style="display:flex;justify-content:space-between;">
+                <a href="/chatroom" class="btn btn-default btn-sm" >&lt; Go to Chatroom</a>
+                <strong>Dashboard</strong>
+                <a href="/logout" class="btn btn-primary btn-sm" >Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12">
+            <div id="dashboard" class="well chatroom">
+                <table>
+                    <tr>
+                        <td align="center"><strong>User</strong></td>
+                        <td><strong>Message Count</strong></td>
+                    </tr>
+                    <% for (var i = 0; i < dashboardRecords.length; i++) { %>
+                        <tr>
+                            <td>
+                                <p class='message'>
+                                    <img src='<%= dashboardRecords[i].photo %>' alt='Thumbnail'>
+                                    <i><%= dashboardRecords[i].name %></i>
+                                </p>
+                            </td>
+                            <td align="center"><%= dashboardRecords[i].messageCount %></td>
+                        </tr>
+                    <% } %>
+                    
+                   <!--  <tr>
+                        <td>
+                            <p class='message'>
+                                <img src='../image/robot.png' alt='Thumbnail'>
+                                <i>Robot</i>
+                            </p>
+                        </td>
+                        <td align="center">11</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p class='message'>
+                                <img src='https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=298312590921688&height=50&width=50&ext=1536679271&hash=AeQGKpIVwi2iuN4I' alt='Thumbnail'>
+                                <i>Funny Mishra</i>
+                            </p>
+                        </td>
+                        <td align="center">19</td>
+                    </tr> -->
+
+                </table>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
