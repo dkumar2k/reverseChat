@@ -28,7 +28,6 @@ $(function(){
 	//Listen on new_message
 	socket.on("new_message", (data) => {
 		feedback.html('');
-		message.val('');
 		let elementString = 
 			"<p class='message'>"	+
 			"<img src='"+ data.photo +"' alt='Thumbnail'>"	+
