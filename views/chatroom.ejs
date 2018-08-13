@@ -9,40 +9,65 @@
 </head>
 <body>
 <section class="container" style="width:800px;">
-    <div class="row">
-        <div class="col-sm-12">
-            <div style="display:flex;justify-content:space-between;">
-                <a href="/dashboard" class="btn btn-default btn-sm" >Go to Dashboard &gt;</a>
-                <strong>Chatroom</strong>
-                <a href="/logout" class="btn btn-primary btn-sm" >Logout</a>
+    <div id="chatroomContainer">
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="display:flex;justify-content:space-between;">
+                    <a href="#" id="dashboardAnchor" class="btn btn-default btn-sm" >Go to Dashboard &gt;</a>
+                    <strong>Chatroom</strong>
+                    <a href="/logout" class="btn btn-primary btn-sm" >Logout</a>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="row" >
-        <div class="col-sm-12">
-            <div id="chatroom" class="well chatroom">
-                <div id="chatTextArea">
+        <div class="row" >
+            <div class="col-sm-12">
+                <div id="chatroom" class="well chatroom">
+                    <div id="chatTextArea">
+                    </div>
+                    <div id="feedback">
+                    </div>
                 </div>
-                <div id="feedback">
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-12">
+                <div id="input_zone" class="well" style="margin-top:5px;"> 
+                    <div style="display:flex;">
+                        <input id="message" class="vertical-align" type="text" placeholder="Type here..." style="flex:20;"/>
+                        <a id="send_message" href="#" class="btn btn-primary btn-sm" style="float:right;flex:1;">Go</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row" >
-        <div class="col-sm-12">
-            <div id="input_zone" class="well" style="margin-top:5px;"> 
-                <div style="display:flex;">
-                    <input id="message" class="vertical-align" type="text" placeholder="Type here..." style="flex:20;"/>
-                    <a id="send_message" href="#" class="btn btn-primary btn-sm" style="float:right;flex:1;">Go</a>
+    <div id="dashboardContainer" >
+        <div class="row">
+            <div class="col-sm-12">
+                <div style="display:flex;justify-content:space-between;">
+                    <a href="#" id="chatroomAnchor" class="btn btn-default btn-sm" >&lt; Go to Chatroom</a>
+                    <strong>Dashboard</strong>
+                    <a href="/logout" class="btn btn-primary btn-sm" >Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-12">
+                <div id="dashboard" class="well chatroom">
+                    <table id="dashboardTable">
+                      <!--   <tr>
+                            <td align="center"><strong>User</strong></td>
+                            <td><strong>Message Count</strong></td>
+                        </tr> -->
+                    </table>
+                    
                 </div>
             </div>
         </div>
     </div>
-
 </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="js/chat.js"></script>
 </body>
 </html>

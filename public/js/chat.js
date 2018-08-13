@@ -1,16 +1,19 @@
 
 $(function(){
+	$("#dashboardContainer").hide();
+
 	//make connection
-	const socket = io.connect('https://da06c5ef.ngrok.io');
-	// const socket = io.connect('https://da06c5ef.ngrok.io', {'sync disconnect on unload': true });
+	// const socket = io.connect('https://da06c5ef.ngrok.io');
+	const socket = io.connect('https://da06c5ef.ngrok.io', {'sync disconnect on unload': true });
 
 	const message = $("#message");
 	const name = $("#name").val();
 	const send_message = $("#send_message");
 	const chatTextArea = $("#chatTextArea");
 	const feedback = $("#feedback");
+	const chatroom=document.getElementById("chatroom");
 
-	$("#message").keyup(function(event) {
+	message.keyup(function(event) {
 	    if (event.keyCode === 13) {
 	        $("#send_message").click();
 	    }
@@ -33,6 +36,8 @@ $(function(){
 			"<i>" + data.message + "</i>"	+
 			"</p>";
 		chatTextArea.append(elementString);
+
+		chatroom.scrollTop = chatroom.scrollHeight;
 	});
 
 	//Emit typing event
@@ -44,9 +49,46 @@ $(function(){
 	socket.on('typing', (data) => {
 		feedback.html('');
 		feedback.append("<p><i>" + data.name + " is typing a message..." + "</i></p>");
+		chatroom.scrollTop = chatroom.scrollHeight;
+	});
+	//Listen on disconnect
+	socket.on('user_disconnected', (data) => {
+		feedback.html('');
+		feedback.append("<p><i>" + data.name + " has disconnected..." + "</i></p>");
+		chatroom.scrollTop = chatroom.scrollHeight;
 	});
 
-
+	$("#dashboardAnchor").click(function(){
+		$("#chatroomContainer").hide();
+		$("#dashboardContainer").show();
+		$("#dashboardTable").html('');
+		let row1= 
+			"<tr><td align='center'><strong>User</strong></td>"	+
+			"<td><strong>Message Count</strong></td></tr>";
+		
+		
+		$.ajax({url: "/dashboard", success: function(dashboardRecords){
+			$('#dashboardTable').html(row1);
+			if(dashboardRecords){
+				dashboardRecords.forEach(function(record){
+					let row= 
+						"<tr>"	+
+						"<td><p class='message'>"	+
+						"<img src='"+record.facebook.photo+"' alt='Thumbnail'>"	+
+						"<i>" +record.facebook.name + "</i>"	+
+						"</p></td>"+
+						"<td align='center'>"+ record.chatCount + "</td>"	+
+						"</tr>";
+					
+					$('#dashboardTable tr:last').after(row);
+				});
+			}
+		}});
+	});
+	$("#chatroomAnchor").click(function(){
+		$("#dashboardContainer").hide();
+		$("#chatroomContainer").show();
+	});
 });
 
 

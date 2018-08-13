@@ -41,6 +41,14 @@ module.exports = function(server, sessionMiddleware) {
 				socket.on('disconnect', function () {
 					console.log("---Socket Disconnected for "+user.facebook.name);
 					io.emit('user_disconnected', { name : user.facebook.name });
+					Chat.findOneAndRemove({ "user": userId }, function (err) {
+						if (err){
+							console.log('Chat count initialization persist failed--');
+						}else{
+							console.log('Chat count initialization persisted--');
+						}
+						return;
+				 	});
 				});
 				
 			}

@@ -23,7 +23,8 @@ module.exports = function(app, passport) {
 				console.log("Chat DB retrieval FAILED. Err: "+ JSON.stringify(err));
 				return;
 			}
-			res.render('dashboard.ejs', { 'dashboardRecords' : chats });
+			// res.render('dashboard.ejs', { 'dashboardRecords' : chats });
+			res.status(200).send(chats);
 			// return chats;
 		});
 	});
