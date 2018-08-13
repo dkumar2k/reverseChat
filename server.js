@@ -6,23 +6,21 @@ const configDB = require('./app/config/database.js');
 const app = express();
 // let userRoutes = require('./app/routes/user.js');
 
-// let authRoutes = require('./app/routes/auth.js');
 const passport = require('passport');
-const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser.json());// get information from html forms
+app.use(bodyParser.json());// get information from html forms/ajax calls
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-require('./app/config/passport')(passport); // pass passport for configuration
+ // configure passport for Facebook authentication
+require('./app/config/passport')(passport);
 
 // Bootstrap db connection
 mongoose.Promise = global.Promise;
-const dbUrl=process.env.dbUrl || configDB.url;
+const dbUrl = configDB.url;
 const db = mongoose.connect(dbUrl);
 // Check if MongoDB is running
 mongoose.connection.on('error', function(err) {
@@ -34,20 +32,17 @@ mongoose.connection.on('open', function() {
   // else Passport Session for MongoDB connection will fail in express.js file
 
 
-  // app.use('/user', userRoutes);
-
-    // here you set that all templates are located in `/views` directory
-  // app.set('views', __dirname + '/public');
+  // here you set that all templates are located in `/public` directory
   app.use(express.static('public'));
 
-  // here you set that you're using `ejs` template engine, and the
-  // default extension is `ejs`
+  // here you set that you're using `ejs` template engine, 
+  // and the default extension is `ejs`
   app.set('view engine', 'ejs');
 
   // required for passport
   const sessionMiddleware = session({
       name: "myCookie",
-      secret: 'arbitsessionsecret', // session secret
+      secret: process.env.sessionSecret || 'arbitsessionsecret', // session secret
       resave: true,
       saveUninitialized: true,
       store: new (require("connect-mongo")(session))({
@@ -59,18 +54,26 @@ mongoose.connection.on('open', function() {
     .use(sessionMiddleware)
     .use(passport.initialize())
     .use(passport.session()) // persistent login sessions
-    // .use(flash()) // use connect-flash for flash messages stored in session
     ;
 
   require('./app/routes/user.js')(app, passport); // load our user routes and pass in our app and fully configured passport
 
 
-  const server = app.listen(3000, ()=>{
+  const server = app.listen(process.env.PORT || 3000, ()=>{
     console.log('Node server Listening on port:' + server.address().port);
   });
 
   require('./app/controllers/chat')(server, sessionMiddleware); // load our user routes and pass in our app and fully configured passport
 
+  // Below is the default Error Handler Middleware
+  app.use((err, req, res, next) => {
+    console.log('Uncaught Err:'+JSON.stringify(err));
+    if (res.headersSent) {
+      return next(err);
+    }
+    res.status(500).send({ error: err });
+  });
+  // Below is the default 404 Router Middleware
   app.use((req, res) => {
     res.status(404).send({
       url: req.originalUrl,

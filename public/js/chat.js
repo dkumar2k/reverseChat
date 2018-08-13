@@ -3,8 +3,7 @@ $(function(){
 	$("#dashboardContainer").hide();
 
 	//make connection
-	// const socket = io.connect('https://da06c5ef.ngrok.io');
-	const socket = io.connect('https://da06c5ef.ngrok.io', {'sync disconnect on unload': true });
+	const socket = io.connect('https://4bf55bec.ngrok.io', {'sync disconnect on unload': true });
 
 	const message = $("#message");
 	const name = $("#name").val();

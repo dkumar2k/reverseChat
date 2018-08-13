@@ -2,7 +2,6 @@ const User = require('../models/user');
 const Chat = require('../models/chat');
 
 module.exports = function(server, sessionMiddleware) {
-	// const io = require("socket.io")(server);
 	const io = require("socket.io")(server)
 	.use((socket, next)=>{
 		// Wrap the express middleware
@@ -58,7 +57,6 @@ module.exports = function(server, sessionMiddleware) {
 	
 };
 
-// route middleware to ensure user is logged in
 const reverseMessage = (message) => {
 	let reverseMessage = "";
 	if(message && message.length>0){
