@@ -1,3 +1,5 @@
+const Chat = require('../models/chat');
+
 module.exports = function(app, passport) {
 
 	// show the home page (will also have our login links)
@@ -15,20 +17,28 @@ module.exports = function(app, passport) {
 	});
 	
 	app.get('/dashboard', isLoggedIn, function(req, res) {
-		console.log('User reached /dashboard');
-		res.render('dashboard.ejs', {
-			'dashboardRecords' : [
-				{name:'Sunny Mishra', photo:'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=298312590921688&height=50&width=50&ext=1536679271&hash=AeQGKpIVwi2iuN4I' ,
-				messageCount:21},
-				{name:'Robot', photo:'../image/robot.png',messageCount:19},
-				{name:'Funny Mishra', photo:'https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=298312590921688&height=50&width=50&ext=1536679271&hash=AeQGKpIVwi2iuN4I',
-				messageCount:10}
-			]
+		console.log('User reached /dashboard..');
+		Chat.find({}, function(err, chats) {
+			if (err){
+				console.log("Chat DB retrieval FAILED. Err: "+ JSON.stringify(err));
+				return;
+			}
+			res.render('dashboard.ejs', { 'dashboardRecords' : chats });
+			// return chats;
 		});
 	});
 	// LOGOUT ==============================
 	app.get('/logout', function(req, res) {
-		req.logout();
+		console.log('Going to initialize ChatCount--');
+		Chat.findOneAndRemove({ "user": req.user._id }, function (err) {
+			if (err){
+				console.log('Chat count initialization persist failed--');
+			}else{
+				console.log('Chat count initialization persisted--');
+			}
+			return;
+	 	});
+	 	req.logout();
 		res.redirect('/');
 	});
 

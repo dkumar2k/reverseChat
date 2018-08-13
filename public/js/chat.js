@@ -1,7 +1,8 @@
 
 $(function(){
 	//make connection
-	const socket = io.connect('https://491ab02a.ngrok.io');
+	const socket = io.connect('https://da06c5ef.ngrok.io');
+	// const socket = io.connect('https://da06c5ef.ngrok.io', {'sync disconnect on unload': true });
 
 	const message = $("#message");
 	const name = $("#name").val();
