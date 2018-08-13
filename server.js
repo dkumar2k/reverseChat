@@ -1,7 +1,8 @@
+require('dotenv').load();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const configDB = require('./app/config/database.js');
+const config = require('./app/config/configuration.js');
 
 const app = express();
 // let userRoutes = require('./app/routes/user.js');
@@ -20,7 +21,7 @@ require('./app/config/passport')(passport);
 
 // Bootstrap db connection
 mongoose.Promise = global.Promise;
-const dbUrl = configDB.url;
+const dbUrl = config.dbUrl;
 const db = mongoose.connect(dbUrl);
 // Check if MongoDB is running
 mongoose.connection.on('error', function(err) {
@@ -42,7 +43,7 @@ mongoose.connection.on('open', function() {
   // required for passport
   const sessionMiddleware = session({
       name: "myCookie",
-      secret: process.env.sessionSecret || 'arbitsessionsecret', // session secret
+      secret: 'arbitsessionsecret', // session secret
       resave: true,
       saveUninitialized: true,
       store: new (require("connect-mongo")(session))({

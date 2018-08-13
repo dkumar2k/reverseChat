@@ -2,10 +2,10 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const SchemaTypes = mongoose.Schema.Types;
+const SchemaTypes = Schema.Types;
 
 /**
- * User Schema
+ * Chat Schema
  */
 const ChatSchema = new Schema({
 	user: {
@@ -21,10 +21,5 @@ const ChatSchema = new Schema({
   collection: 'chat'
 });
 
-// userId: String,
-// user: {
-// 		type: Schema.ObjectId,
-// 		ref: 'User'
-// 	}
 
 module.exports = mongoose.model('Chat', ChatSchema);

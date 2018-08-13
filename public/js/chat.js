@@ -1,9 +1,9 @@
 
 $(function(){
 	$("#dashboardContainer").hide();
-
+	const socketUrl = $("#socketUrlHidden").val();
 	//make connection
-	const socket = io.connect('https://4bf55bec.ngrok.io', {'sync disconnect on unload': true });
+	const socket = io.connect(socketUrl, {'sync disconnect on unload': true });
 
 	const message = $("#message");
 	const name = $("#name").val();

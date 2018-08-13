@@ -1,4 +1,5 @@
 const Chat = require('../models/chat');
+const config = require('../config/configuration.js');
 
 module.exports = function(app, passport) {
 
@@ -12,7 +13,8 @@ module.exports = function(app, passport) {
 	app.get('/chatroom', isLoggedIn, function(req, res) {
 		console.log('User reached /chatroom');
 		res.render('chatroom.ejs', {
-			user : req.user
+			user : req.user,
+			socketUrl:config.socketUrl
 		});
 	});
 	
@@ -23,9 +25,7 @@ module.exports = function(app, passport) {
 				console.log("Chat DB retrieval FAILED. Err: "+ JSON.stringify(err));
 				return;
 			}
-			// res.render('dashboard.ejs', { 'dashboardRecords' : chats });
 			res.status(200).send(chats);
-			// return chats;
 		});
 	});
 	// LOGOUT ==============================

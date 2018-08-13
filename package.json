@@ -21,7 +21,7 @@
     "ejs": "*",
     "nconf": "*",
     "dateformat": "*",
-    "connect-flash": "*"
+    "dotenv": "*"
   },
   "devDependencies": {}
 }

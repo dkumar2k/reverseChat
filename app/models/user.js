@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const SchemaTypes = mongoose.Schema.Types;
+const SchemaTypes = Schema.Types;
 
 /**
  * User Schema
@@ -10,7 +10,7 @@ const SchemaTypes = mongoose.Schema.Types;
 const UserSchema = new Schema({
 	facebook : {
 		id: String,
-		token: String, 		// we will save the token that facebook provides to the user					
+		token: String, 		// we will save the token that facebook provides to the user
 		name: String,		// look at the passport user profile to see how names are returned
 		email: String,
 		photo: String
